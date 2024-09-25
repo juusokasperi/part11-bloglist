@@ -1,0 +1,17 @@
+{
+	"name": "fullstackopen-cicd-bloglist",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Bloglist project",
+	"workspaces": [
+		"frontend",
+		"backend",
+		"e2e"
+	],
+	"scripts": {
+	  "build": "npm run build --workspace frontend",
+	  "start": "npm start --workspace backend",
+	  "lint": "npm run lint --workspaces",
+	  "test": "npm run test --workspaces"
+	}
+}
