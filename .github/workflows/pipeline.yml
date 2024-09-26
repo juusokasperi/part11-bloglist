@@ -43,7 +43,7 @@ jobs:
         run: |
           npm run start:test &
           npm run dev:frontend &
-          sleep 30
+          sleep 5
           npx playwright install --with-deps
           npm run test:e2e
       - uses: actions/upload-artifact@v4
@@ -53,9 +53,21 @@ jobs:
           path: playwright-report/
           retention-days: 5
 
-  tag_release:
+  production_deployment:
     if: ${{ github.event_name == 'push' && !github.env.SKIP }}
     needs: [simple_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Render
+        run: |
+          echo "Deploying.."
+          curl: "https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}"
+
+  tag_release:
+    if: ${{ github.event_name == 'push' && !github.env.SKIP }}
+    needs: [tag_release]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
