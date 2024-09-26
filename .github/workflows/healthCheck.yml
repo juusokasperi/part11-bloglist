@@ -6,9 +6,6 @@ env:
 on:
   schedule:
     - cron: '35 13 1,15 * *'
-  push:
-    branches:
-      - main
 
 jobs:
   health_check:
